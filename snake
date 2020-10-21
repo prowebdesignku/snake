@@ -1,0 +1,52 @@
+snake@MacBookPro:firmware % ls -lart
+total 1440
+-rw-r--r--   1 snake staff    8192 Sep 13  2019 boot_app0.bin
+-rw-r--r--   1 snake staff    3072 Sep 16  2019 partitions.bin
+-rw-r--r--   1 snake staff   17392 Oct  2  2019 bootloader_qout_80m.bin
+-rw-r--r--   1 snake staff   17408 Oct  2  2019 bootloader_qout_40m.bin
+-rw-r--r--   1 snake staff   17392 Oct  2  2019 bootloader_qio_80m.bin
+-rw-r--r--   1 snake staff   17408 Oct  2  2019 bootloader_qio_40m.bin
+-rw-r--r--   1 snake staff   15856 Oct  2  2019 bootloader_dout_80m.bin
+-rw-r--r--   1 snake staff   15872 Oct  2  2019 bootloader_dout_40m.bin
+-rw-r--r--   1 snake staff   15856 Oct  2  2019 bootloader_dio_80m.bin
+-rw-r--r--   1 snake staff   15872 Oct  2  2019 bootloader_dio_40m.bin
+-rw-r--r--   1 snake staff 1309488 May 11 20:53 firmware.bin
+-rw-r--r--   1 snake staff     319 May 11 22:35 flash.sh
+drwx------+ 61 snake staff    1952 Oct  5 21:08 ..
+drwxrwxrwx  14 snake staff     448 Oct  5 21:08 .
+snake@MacBookPro:firmware % 
+snake@MacBookPro:firmware % esptool.py  --chip esp32 --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode qout --flash_freq 80m --flash_size detect 0xe000 boot_app0.bin 0x1000 bootloader_qout_80m.bin 0x10000 firmware.bin 0x8000 partitions.bin
+
+esptool.py v2.7
+Found 3 serial ports
+Serial port /dev/cu.usbserial-0001
+/dev/cu.usbserial-0001 failed to connect: [Errno 16] could not open port /dev/cu.usbserial-0001: [Errno 16] Resource busy: '/dev/cu.usbserial-0001'
+Serial port /dev/cu.SLAB_USBtoUART
+Connecting........_____.
+Chip is ESP32D0WDQ6 (revision 1)
+Features: WiFi, BT, Dual Core, Coding Scheme None
+Crystal is 40MHz
+MAC: 24:0a:c4:0c:76:34
+Uploading stub...
+Running stub...
+Stub running...
+Changing baud rate to 921600
+Changed.
+Configuring flash size...
+Auto-detected Flash size: 4MB
+Compressed 8192 bytes to 47...
+Wrote 8192 bytes (47 compressed) at 0x0000e000 in 0.0 seconds (effective 4907.2 kbit/s)...
+Hash of data verified.
+Flash params set to 0x012f
+Compressed 17392 bytes to 11187...
+Wrote 17392 bytes (11187 compressed) at 0x00001000 in 0.1 seconds (effective 984.2 kbit/s)...
+Hash of data verified.
+Compressed 1309488 bytes to 743141...
+Wrote 1309488 bytes (743141 compressed) at 0x00010000 in 12.7 seconds (effective 825.3 kbit/s)...
+Hash of data verified.
+Compressed 3072 bytes to 144...
+Wrote 3072 bytes (144 compressed) at 0x00008000 in 0.0 seconds (effective 1660.8 kbit/s)...
+Hash of data verified.
+
+Leaving...
+Hard resetting via RTS pin...
